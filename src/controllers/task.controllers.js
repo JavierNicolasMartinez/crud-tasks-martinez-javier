@@ -1,4 +1,6 @@
+import { Op } from "sequelize";
 import { TaskModel } from "../models/task.model.js";
+
 
 export const createTask = async (req, res) => {
   const { title, description, isComplete } = req.body;
@@ -104,7 +106,7 @@ export const updateTask = async (req, res) => {
       }
     }
     if (title) {
-      const taskUnica = await TaskModel.findOne({ where: { title } });
+      const taskUnica = await TaskModel.findOne({where: {title: title, id: {[Op.ne]: req.params.id}}});
       if (taskUnica !== null) {
         return res.status(400).json({
           Message: "El título ya existe.",

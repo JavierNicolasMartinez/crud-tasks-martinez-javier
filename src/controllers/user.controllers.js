@@ -1,4 +1,6 @@
+import { Op } from "sequelize";
 import { UserModel } from "../models/user.model.js";
+
 
 export const createUser = async (req, res) => {
   const { email, name, password } = req.body;
@@ -122,7 +124,7 @@ export const updateUser = async (req, res) => {
       }
     }
     if (email) {
-      const userUnico = await UserModel.findOne({ where: { email } });
+      const userUnico = await UserModel.findOne({where: {email: email, id: {[Op.ne]: req.params.id}}});
       if (userUnico !== null) {
         return res.status(400).json({
           Message: "El email ya existe.",
