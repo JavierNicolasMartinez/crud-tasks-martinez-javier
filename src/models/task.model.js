@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
 
-export const Task = sequelize.define("task", {
+export const TaskModel = sequelize.define("task", {
   title: {
     type: DataTypes.STRING(100),
     unique: true,
@@ -13,6 +13,6 @@ export const Task = sequelize.define("task", {
   },
   isComplete: {
     type: DataTypes.BOOLEAN,
-    default: false,
+    defaultValue: false,
   },
 });

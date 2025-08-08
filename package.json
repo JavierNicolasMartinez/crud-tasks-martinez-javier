@@ -2,8 +2,8 @@
   "name": "primer-trabajo-crud",
   "version": "1.0.0",
   "main": "app.js",
+  "type": "module",
   "scripts": {
-    "start": "node app.js",
     "dev": "node --watch app.js"
   },
   "repository": {
@@ -13,7 +13,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "bugs": {
     "url": "https://github.com/JavierNicolasMartinez/crud-tasks-martinez-javier/issues"
   },

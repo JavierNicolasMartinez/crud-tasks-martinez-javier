@@ -7,10 +7,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
 app.use(express.json());
-app.use("/api", router);
+// app.use("/api", router);
 
 app.listen(PORT, async () => {
-    await startDB();
-    console.log("Servidor corriendo en el puerto: ", PORT);
+  await startDB();
+  console.log("Servidor corriendo en el puerto: ", PORT);
 });
-

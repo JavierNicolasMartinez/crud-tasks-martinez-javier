@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
 
-export const User = sequelize.define("user", {
+export const UserModel = sequelize.define("user", {
   name: {
     type: DataTypes.STRING(100),
     allowNull: false,
