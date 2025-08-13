@@ -60,6 +60,8 @@ export const createTask = async (req, res) => {
 export const updateTask = async (req, res) => {
   const { title, description, isComplete } = req.body;
   try {
+//Recordar primero ver existencia. 
+
     if (title) {
       if (title === undefined || title === "") {
         return res
@@ -106,7 +108,7 @@ export const updateTask = async (req, res) => {
       }
     }
     if (title) {
-      const taskUnica = await TaskModel.findOne({where: {title: title, id: {[Op.ne]: req.params.id}}});
+      const taskUnica = await TaskModel.findOne({where: {title, id: {[Op.ne]: req.params.id}}});
       if (taskUnica !== null) {
         return res.status(400).json({
           Message: "El título ya existe.",
