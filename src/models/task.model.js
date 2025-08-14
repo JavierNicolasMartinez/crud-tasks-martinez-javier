@@ -1,5 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
+import { UserModel } from "./user.model.js";
+
 
 export const TaskModel = sequelize.define("task", {
   title: {
@@ -15,4 +17,10 @@ export const TaskModel = sequelize.define("task", {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+},
+{
+  timestamps: false,
 });
+
+TaskModel.belongsTo(UserModel, {foreignKey: "user_id", as: "user"});
+UserModel.hasMany(TaskModel, {foreignKey: "user_id", as: "tasks"} );
