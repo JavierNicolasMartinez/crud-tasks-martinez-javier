@@ -1,5 +1,7 @@
 import { Op } from "sequelize";
 import { UserModel } from "../models/user.model.js";
+import { UserProfileModel } from "../models/user_profile.model.js";
+import { TaskModel } from "../models/task.model.js";
 
 export const createUser = async (req, res) => {
   const { email, name, password } = req.body;
@@ -148,7 +150,19 @@ export const updateUser = async (req, res) => {
 
 export const usersAll = async (req, res) => {
   try {
-    const usuarios = await UserModel.findAll();
+    const usuarios = await UserModel.findAll({
+      attributes: { exclude: ["password"] },
+      include: [
+        {
+          model: TaskModel,
+          attributes: { exclude: ["id", "user_id"] },
+        },
+        {
+          model: UserProfileModel,
+          attributes: { exclude: ["user_id", "id"] },
+        },
+      ],
+    });
     if (usuarios.length === 0) {
       return res
         .status(404)
@@ -162,7 +176,19 @@ export const usersAll = async (req, res) => {
 
 export const userId = async (req, res) => {
   try {
-    const usuario = await UserModel.findByPk(req.params.id);
+    const usuario = await UserModel.findByPk(req.params.id, {
+      attributes: { exclude: ["password"] },
+      include: [
+        {
+          model: TaskModel,
+          attributes: { exclude: ["user_id", "id"] },
+        },
+        {
+          model: UserProfileModel,
+          attributes: { exclude: ["id", "user_id"] },
+        },
+      ],
+    });
     if (usuario) {
       return res.status(200).json(usuario);
     }

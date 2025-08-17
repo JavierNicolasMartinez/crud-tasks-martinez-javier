@@ -1,9 +1,24 @@
 import { Op } from "sequelize";
 import { TaskModel } from "../models/task.model.js";
+import { UserModel } from "../models/user.model.js";
+import { TaskTagsModel } from "../models/task_tags.model.js";
+import { TagModel } from "../models/tag.model.js";
 
 export const createTask = async (req, res) => {
-  const { title, description, isComplete } = req.body;
+  const { title, description, isComplete, user_id } = req.body;
   try {
+    if (!user_id || !Number.isInteger(user_id))
+      return res
+        .status(400)
+        .json({ message: "Es necesario asignar un usuario a la tarea" });
+
+    const usuario = await UserModel.findByPk(user_id);
+    if (!usuario) {
+      return res.status(404).json({
+        message: "El usuario no existe",
+      });
+    }
+
     if (title === undefined || title === "") {
       return res
         .status(400)
@@ -48,6 +63,7 @@ export const createTask = async (req, res) => {
       title,
       description,
       isComplete,
+      user_id,
     });
 
     res.status(201).json({ Message: "La tarea fue creada con exito" });
@@ -57,10 +73,20 @@ export const createTask = async (req, res) => {
 };
 
 export const updateTask = async (req, res) => {
-  const { title, description, isComplete } = req.body;
+  const { title, description, isComplete, user_id } = req.body;
   try {
     //Recordar primero ver existencia.
+    if (!user_id || !Number.isInteger(user_id))
+      return res
+        .status(400)
+        .json({ message: "Es necesario asignar un usuario a la tarea" });
 
+    const usuario = await UserModel.findByPk(user_id);
+    if (!usuario) {
+      return res.status(404).json({
+        message: "El usuario no existe",
+      });
+    }
     if (title) {
       if (title === undefined || title === "") {
         return res
@@ -118,7 +144,7 @@ export const updateTask = async (req, res) => {
     }
 
     const [updated] = await TaskModel.update(
-      { title, description, isComplete },
+      { title, description, isComplete, user_id },
       { where: { id: req.params.id } }
     );
     if (updated === 0) {
@@ -132,7 +158,22 @@ export const updateTask = async (req, res) => {
 
 export const tasksAll = async (req, res) => {
   try {
-    const tareas = await TaskModel.findAll();
+    const tareas = await TaskModel.findAll({
+      attributes: {
+        exclude: ["user_id"],
+      },
+      include: [
+        {
+          model: UserModel,
+          attributes: { exclude: ["password"] },
+        },
+        {
+          model: TaskTagsModel,
+          attributes: ["id"],
+          include: [{ model: TagModel, attributes: ["name"] }],
+        },
+      ],
+    });
     if (tareas.length === 0) {
       return res
         .status(404)
@@ -146,7 +187,22 @@ export const tasksAll = async (req, res) => {
 
 export const tasksId = async (req, res) => {
   try {
-    const tarea = await TaskModel.findByPk(req.params.id);
+    const tarea = await TaskModel.findByPk(req.params.id, {
+      attributes: {
+        exclude: ["user_id"],
+      },
+      include: [
+        {
+          model: UserModel,
+          attributes: { exclude: ["password"] },
+        },
+        {
+          model: TaskTagsModel,
+          attributes: ["id"],
+          include: [{ model: TagModel, attributes: ["name"] }],
+        },
+      ],
+    });
     if (tarea) {
       return res.status(200).json(tarea);
     }
