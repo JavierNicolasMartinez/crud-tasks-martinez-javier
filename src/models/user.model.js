@@ -2,26 +2,24 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
 import { TaskModel } from "./task.model.js";
 
-
-export const UserModel = sequelize.define("user", {
-  name: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
+export const UserModel = sequelize.define(
+  "user",
+  {
+    name: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING(100),
+      unique: true,
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
   },
-  email: {
-    type: DataTypes.STRING(100),
-    unique: true,
-    allowNull: false,
-  },
-  password: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
-  },
-},
   {
     timestamps: false,
   }
 );
-
-
-
