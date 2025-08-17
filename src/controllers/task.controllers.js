@@ -1,7 +1,6 @@
 import { Op } from "sequelize";
 import { TaskModel } from "../models/task.model.js";
 
-
 export const createTask = async (req, res) => {
   const { title, description, isComplete } = req.body;
   try {
@@ -60,7 +59,7 @@ export const createTask = async (req, res) => {
 export const updateTask = async (req, res) => {
   const { title, description, isComplete } = req.body;
   try {
-//Recordar primero ver existencia. 
+    //Recordar primero ver existencia.
 
     if (title) {
       if (title === undefined || title === "") {
@@ -108,7 +107,9 @@ export const updateTask = async (req, res) => {
       }
     }
     if (title) {
-      const taskUnica = await TaskModel.findOne({where: {title, id: {[Op.ne]: req.params.id}}});
+      const taskUnica = await TaskModel.findOne({
+        where: { title, id: { [Op.ne]: req.params.id } },
+      });
       if (taskUnica !== null) {
         return res.status(400).json({
           Message: "El título ya existe.",
