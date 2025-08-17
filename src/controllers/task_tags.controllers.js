@@ -1,6 +1,6 @@
-import { TagModel } from "../models/tag.model";
-import { TaskModel } from "../models/task.model";
-import { TaskTagsModel } from "../models/task_tags.model";
+import { TagModel } from "../models/tag.model.js";
+import { TaskModel } from "../models/task.model.js";
+import { TaskTagsModel } from "../models/task_tags.model.js";
 
 export const createTaskTag = async (req, res) => {
   const { task_id, tag_id } = req.body;

@@ -1,5 +1,5 @@
-import { UserProfileModel } from "../models/user_profile.model";
-import { UserModel } from "../models/user.model";
+import { UserProfileModel } from "../models/user_profile.model.js";
+import { UserModel } from "../models/user.model.js";
 
 export const createUserProfile = async (req, res) => {
   const { bio, date_of_birth, phone_number, user_id } = req.body;
