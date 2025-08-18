@@ -54,9 +54,9 @@ export const createTaskTag = async (req, res) => {
 
 export const taskTagsAll = async (req, res) => {
   try {
-    const relacionesTaskTagAll = await TaskTagsModel.findAll({
+    const relacionesTaskTagAll = await TaskModel.findAll({
       // attributes: ["id"],
-      include: [{ model: TagModel }, { model: TaskModel }],
+      include: [{ model: TagModel, as: "tags", through: { attributes: [] } }],
     });
     if (relacionesTaskTagAll.length === 0) {
       return res.status(404).json({
@@ -77,7 +77,7 @@ export const taskTagId = async (req, res) => {
         {
           model: TagModel,
         },
-        { model: TaskModel, },
+        { model: TaskModel },
       ],
     });
     if (relacionTaskTag) {

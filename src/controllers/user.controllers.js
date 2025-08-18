@@ -2,6 +2,7 @@ import { Op } from "sequelize";
 import { UserModel } from "../models/user.model.js";
 import { UserProfileModel } from "../models/user_profile.model.js";
 import { TaskModel } from "../models/task.model.js";
+import { TagModel } from "../models/tag.model.js";
 
 export const createUser = async (req, res) => {
   const { email, name, password } = req.body;
@@ -157,7 +158,13 @@ export const usersAll = async (req, res) => {
           model: TaskModel,
           attributes: { exclude: ["id", "user_id"] },
           as: "tasks",
+          include: {
+            model: TagModel,
+            attributes: ["name"],
+            as: "tags",
+          },
         },
+
         {
           model: UserProfileModel,
           attributes: { exclude: ["user_id", "id"] },
