@@ -26,7 +26,7 @@ export const createUserProfile = async (req, res) => {
         .json({ message: "Es necesario asignar un usuario al perfil" });
 
     const usuarioExistente = await UserModel.findByPk(user_id);
-    if (usuarioExistente !== null) {
+    if (usuarioExistente === null) {
       return res.status(400).json({
         message: "El usuario no existe",
       });
@@ -63,6 +63,7 @@ export const profilesAll = async (req, res) => {
         {
           model: UserModel,
           attributes: { exclude: ["password"] },
+          as: "user",
         },
       ],
     });
@@ -85,6 +86,7 @@ export const perfilId = async (req, res) => {
         {
           model: UserModel,
           attributes: { exclude: ["password"] },
+          as: "user",
         },
       ],
     });

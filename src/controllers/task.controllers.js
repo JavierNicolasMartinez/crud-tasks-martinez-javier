@@ -166,11 +166,12 @@ export const tasksAll = async (req, res) => {
         {
           model: UserModel,
           attributes: { exclude: ["password"] },
+          as: "user",
         },
         {
-          model: TaskTagsModel,
-          attributes: ["id"],
-          include: [{ model: TagModel, attributes: ["name"] }],
+          model: TagModel,
+          // attributes: { include: ["name"] },
+          as: "tags",
         },
       ],
     });

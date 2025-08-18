@@ -156,10 +156,12 @@ export const usersAll = async (req, res) => {
         {
           model: TaskModel,
           attributes: { exclude: ["id", "user_id"] },
+          as: "tasks",
         },
         {
           model: UserProfileModel,
           attributes: { exclude: ["user_id", "id"] },
+          as: "profile",
         },
       ],
     });
@@ -182,10 +184,12 @@ export const userId = async (req, res) => {
         {
           model: TaskModel,
           attributes: { exclude: ["user_id", "id"] },
+          as: "tasks",
         },
         {
           model: UserProfileModel,
           attributes: { exclude: ["id", "user_id"] },
+          as: "profile",
         },
       ],
     });

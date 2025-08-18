@@ -28,13 +28,13 @@ export const createTaskTag = async (req, res) => {
     }
 
     const taskExiste = await TaskModel.findByPk(task_id);
-    if (taskExiste !== null) {
+    if (taskExiste === null) {
       return res.status(400).json({
         message: "La tarea no existe",
       });
     }
     const tagExiste = await TagModel.findByPk(tag_id);
-    if (tagExiste !== null) {
+    if (tagExiste === null) {
       return res.status(400).json({
         message: "La etiqueta no existe",
       });
@@ -55,7 +55,7 @@ export const createTaskTag = async (req, res) => {
 export const taskTagsAll = async (req, res) => {
   try {
     const relacionesTaskTagAll = await TaskTagsModel.findAll({
-      attributes: ["id"],
+      // attributes: ["id"],
       include: [{ model: TagModel }, { model: TaskModel }],
     });
     if (relacionesTaskTagAll.length === 0) {
@@ -72,12 +72,12 @@ export const taskTagsAll = async (req, res) => {
 export const taskTagId = async (req, res) => {
   try {
     const relacionTaskTag = await TaskTagsModel.findByPk(req.params.id, {
-      attributes: ["id"],
+      // attributes: ["id"],
       include: [
         {
           model: TagModel,
         },
-        { model: TaskModel },
+        { model: TaskModel, },
       ],
     });
     if (relacionTaskTag) {

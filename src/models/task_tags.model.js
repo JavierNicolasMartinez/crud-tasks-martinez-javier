@@ -20,14 +20,29 @@ export const TaskTagsModel = sequelize.define(
 
 //RELACIÓN MUCHOS A MUCHOS
 
-TaskModel.belongsToMany(TagModel, {
-  through: TaskTagsModel,
-  foreignKey: "task_id",
-  as: "tasks",
+// TaskModel.belongsToMany(TagModel, {
+//   through: TaskTagsModel,
+//   foreignKey: "task_id",
+//   as: "tags",
+// });
+
+// TagModel.belongsToMany(TaskModel, {
+//   through: TaskTagsModel,
+//   foreignKey: "tag_id",
+//   as: "tasks",
+// });
+
+TaskTagsModel.belongsTo(TagModel, {
+  foreignKey: "tag_id",
 });
 
-TagModel.belongsToMany(TaskModel, {
-  through: TaskTagsModel,
+TaskTagsModel.belongsTo(TaskModel, {
+  foreignKey: "task_id",
+});
+
+TaskModel.hasMany(TaskTagsModel, {
+  foreignKey: "task_id",
+});
+TagModel.hasMany(TaskTagsModel, {
   foreignKey: "tag_id",
-  as: "tags",
 });
