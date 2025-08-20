@@ -32,19 +32,21 @@ TagModel.belongsToMany(TaskModel, {
   as: "tasks",
 });
 
-// TaskTagsModel.belongsTo(TagModel, {
-//   foreignKey: "tag_id",
-// });
+TaskTagsModel.belongsTo(TagModel, {
+  foreignKey: "tag_id",
+  as: "tags",
+});
 
-// TaskTagsModel.belongsTo(TaskModel, {
-//   foreignKey: "task_id",
-// });
+TaskTagsModel.belongsTo(TaskModel, {
+  foreignKey: "task_id",
+  as: "tasks",
+});
 
 // TaskModel.hasMany(TaskTagsModel, {
 //   foreignKey: "task_id",
-//   as: "tasks",
+//   as: "task_tag",
 // });
 // TagModel.hasMany(TaskTagsModel, {
 //   foreignKey: "tag_id",
-//   as: "tags",
+//   as: "task_tag",
 // });

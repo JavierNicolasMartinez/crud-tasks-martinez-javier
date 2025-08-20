@@ -54,9 +54,11 @@ export const createTaskTag = async (req, res) => {
 
 export const taskTagsAll = async (req, res) => {
   try {
-    const relacionesTaskTagAll = await TaskModel.findAll({
-      // attributes: ["id"],
-      include: [{ model: TagModel, as: "tags", through: { attributes: [] } }],
+    const relacionesTaskTagAll = await TaskTagsModel.findAll({
+      include: [
+        { model: TaskModel, as: "tasks" },
+        { model: TagModel, as: "tags" },
+      ],
     });
     if (relacionesTaskTagAll.length === 0) {
       return res.status(404).json({
@@ -72,12 +74,12 @@ export const taskTagsAll = async (req, res) => {
 export const taskTagId = async (req, res) => {
   try {
     const relacionTaskTag = await TaskTagsModel.findByPk(req.params.id, {
-      // attributes: ["id"],
       include: [
         {
           model: TagModel,
+          as: "tags",
         },
-        { model: TaskModel },
+        { model: TaskModel, as: "tasks" },
       ],
     });
     if (relacionTaskTag) {
