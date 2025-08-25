@@ -5,39 +5,39 @@ import { Op } from "sequelize";
 export const createUserProfile = async (req, res) => {
   const { bio, date_of_birth, phone_number, user_id } = req.body;
   try {
-    if (bio === undefined || bio === "") {
-      return res
-        .status(400)
-        .json({ Message: "La biografia no puede estar vacía" });
-    }
-    if (date_of_birth === undefined || date_of_birth === "") {
-      return res
-        .status(400)
-        .json({ Message: "El cumpleaños no puede estar vacío" });
-    }
-    if (phone_number === undefined || phone_number === "") {
-      return res
-        .status(400)
-        .json({ Message: "El telefono no puede estar vacío" });
-    }
+    // if (bio === undefined || bio === "") {
+    //   return res
+    //     .status(400)
+    //     .json({ Message: "La biografia no puede estar vacía" });
+    // }
+    // if (date_of_birth === undefined || date_of_birth === "") {
+    //   return res
+    //     .status(400)
+    //     .json({ Message: "El cumpleaños no puede estar vacío" });
+    // }
+    // if (phone_number === undefined || phone_number === "") {
+    //   return res
+    //     .status(400)
+    //     .json({ Message: "El telefono no puede estar vacío" });
+    // }
 
-    if (!user_id || !Number.isInteger(user_id))
-      return res
-        .status(400)
-        .json({ message: "Es necesario asignar un usuario al perfil" });
+    // if (!user_id || !Number.isInteger(user_id))
+    //   return res
+    //     .status(400)
+    //     .json({ message: "Es necesario asignar un usuario al perfil" });
 
-    const usuarioExistente = await UserModel.findByPk(user_id);
-    if (usuarioExistente === null) {
-      return res.status(400).json({
-        message: "El usuario no existe",
-      });
-    }
-    const perfilUnico = await UserProfileModel.findOne({ where: { user_id } });
-    if (perfilUnico !== null) {
-      return res.status(400).json({
-        Message: "Este usuario ya contiene un perfil asociado",
-      });
-    }
+    // const usuarioExistente = await UserModel.findByPk(user_id);
+    // if (usuarioExistente === null) {
+    //   return res.status(400).json({
+    //     message: "El usuario no existe",
+    //   });
+    // }
+    // const perfilUnico = await UserProfileModel.findOne({ where: { user_id } });
+    // if (perfilUnico !== null) {
+    //   return res.status(400).json({
+    //     Message: "Este usuario ya contiene un perfil asociado",
+    //   });
+    // }
 
     const profile = await UserProfileModel.create({
       bio,

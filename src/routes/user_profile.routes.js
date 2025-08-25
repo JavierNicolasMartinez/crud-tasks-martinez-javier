@@ -6,13 +6,14 @@ import {
   updateProfile,
   deleteProfile,
 } from "../controllers/user_profile.controllers.js";
-import { body,validationResult } from "express-validator";
+import { validationCreateProfile, validationUpdateProfile } from "../middlewares/validations/profileValidation.js";
+import { aplicarValidaciones } from "../middlewares/validator.js";
 
 const routerProfile = express.Router();
-routerProfile.post("/profile", createUserProfile);
+routerProfile.post("/profile", validationCreateProfile, aplicarValidaciones, createUserProfile);
 routerProfile.get("/profile", profilesAll);
 routerProfile.get("/profile/:id", perfilId);
-routerProfile.put("/profile/:id", updateProfile);
+routerProfile.put("/profile/:id", validationUpdateProfile, aplicarValidaciones,  updateProfile);
 routerProfile.delete("/profile/:id", deleteProfile);
 
 export default routerProfile;

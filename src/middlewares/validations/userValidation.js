@@ -22,6 +22,7 @@ export const validationCreateUser = [
       }
     }),
   body("name")
+    .trim()
     .notEmpty()
     .withMessage("El nombre no debe estar vacío")
     .isLength({ max: 100 })
@@ -29,6 +30,7 @@ export const validationCreateUser = [
     .isString()
     .withMessage("El nombre debe ser un string"),
   body("password")
+    .trim()
     .notEmpty()
     .withMessage("La contraseña no debe estar vacío")
     .isLength({ max: 100 })
@@ -75,4 +77,3 @@ export const validationUpdateUser = [
     .isString()
     .withMessage("La contraseña debe ser un string"),
 ];
-
