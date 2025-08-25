@@ -6,7 +6,7 @@ import {
   deleteTag,
   updateTag,
 } from "../controllers/tag.controllers.js";
-import { body } from "express-validator";
+import { body, validationResult } from "express-validator";
 
 const routerTag = express.Router();
 routerTag.post("/tags", createTag);

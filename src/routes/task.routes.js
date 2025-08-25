@@ -6,7 +6,7 @@ import {
   tasksId,
   deleteTask,
 } from "../controllers/task.controllers.js";
-import { body } from "express-validator";
+import { body, validationResult } from "express-validator";
 
 const routerTask = express.Router();
 routerTask.post("/tasks", createTask);

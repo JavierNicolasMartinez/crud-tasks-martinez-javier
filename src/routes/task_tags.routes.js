@@ -4,7 +4,7 @@ import {
   taskTagsAll,
   taskTagId,
 } from "../controllers/task_tags.controllers.js";
-import { body } from "express-validator";
+import { body, validationResult } from "express-validator";
 
 const routerTaskTag = express.Router();
 routerTaskTag.post("/task_tags", createTaskTag);

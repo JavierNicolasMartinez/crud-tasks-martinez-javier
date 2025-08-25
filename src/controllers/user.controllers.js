@@ -7,52 +7,52 @@ import { TagModel } from "../models/tag.model.js";
 export const createUser = async (req, res) => {
   const { email, name, password } = req.body;
   try {
-    if (email === undefined || email === "") {
-      return res.status(400).json({ Message: "El email no puede estar vacío" });
-    }
-    if (name === undefined || name === "") {
-      return res
-        .status(400)
-        .json({ Message: "El nombre no puede estar vacío" });
-    }
-    if (password === undefined || password === "") {
-      return res
-        .status(400)
-        .json({ Message: "El password no puede estar vacío" });
-    }
+    // if (email === undefined || email === "") {
+    //   return res.status(400).json({ Message: "El email no puede estar vacío" });
+    // }
+    // if (name === undefined || name === "") {
+    //   return res
+    //     .status(400)
+    //     .json({ Message: "El nombre no puede estar vacío" });
+    // }
+    // if (password === undefined || password === "") {
+    //   return res
+    //     .status(400)
+    //     .json({ Message: "El password no puede estar vacío" });
+    // }
 
-    if (typeof email !== "string") {
-      return res.status(400).json({ Message: "El email debe ser una cadena" });
-    }
-    if (email.length > 100) {
-      return res
-        .status(400)
-        .json({ Message: "El email no debe ser mayor a 100 caracteres." });
-    }
-    if (typeof name !== "string") {
-      return res.status(400).json({ Message: "El nombre debe ser una cadena" });
-    }
-    if (name.length > 100) {
-      return res.status(400).json({
-        Message: "El nombre no debe ser mayor a 100 caracteres.",
-      });
-    }
-    if (typeof password !== "string") {
-      return res
-        .status(400)
-        .json({ Message: "La contraseña debe ser una cadena" });
-    }
-    if (password.length > 100) {
-      return res.status(400).json({
-        Message: "La contraseña no debe ser mayor a 100 caracteres.",
-      });
-    }
-    const userUnico = await UserModel.findOne({ where: { email } });
-    if (userUnico !== null) {
-      return res.status(400).json({
-        Message: "El email ya existe.",
-      });
-    }
+    // if (typeof email !== "string") {
+    //   return res.status(400).json({ Message: "El email debe ser una cadena" });
+    // }
+    // if (email.length > 100) {
+    //   return res
+    //     .status(400)
+    //     .json({ Message: "El email no debe ser mayor a 100 caracteres." });
+    // }
+    // if (typeof name !== "string") {
+    //   return res.status(400).json({ Message: "El nombre debe ser una cadena" });
+    // }
+    // if (name.length > 100) {
+    //   return res.status(400).json({
+    //     Message: "El nombre no debe ser mayor a 100 caracteres.",
+    //   });
+    // }
+    // if (typeof password !== "string") {
+    //   return res
+    //     .status(400)
+    //     .json({ Message: "La contraseña debe ser una cadena" });
+    // }
+    // if (password.length > 100) {
+    //   return res.status(400).json({
+    //     Message: "La contraseña no debe ser mayor a 100 caracteres.",
+    //   });
+    // }
+    // const userUnico = await UserModel.findOne({ where: { email } });
+    // if (userUnico !== null) {
+    //   return res.status(400).json({
+    //     Message: "El email ya existe.",
+    //   });
+    // }
     const user = await UserModel.create({
       email,
       name,
@@ -68,73 +68,73 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   const { email, name, password } = req.body;
   try {
-    if (email) {
-      if (email === undefined || email === "") {
-        return res
-          .status(400)
-          .json({ Message: "El email no puede estar vacío" });
-      }
-    }
-    if (name) {
-      if (name === undefined || name === "") {
-        return res
-          .status(400)
-          .json({ Message: "El nombre no puede estar vacío" });
-      }
-    }
-    if (password) {
-      if (password === undefined || password === "") {
-        return res
-          .status(400)
-          .json({ Message: "La contraseña no puede estar vacía" });
-      }
-    }
-    if (email) {
-      if (typeof email !== "string") {
-        return res
-          .status(400)
-          .json({ Message: "El email debe ser una cadena" });
-      }
-      if (email.length > 100) {
-        return res
-          .status(400)
-          .json({ Message: "El email no debe ser mayor a 100 caracteres." });
-      }
-    }
-    if (name) {
-      if (typeof name !== "string") {
-        return res
-          .status(400)
-          .json({ Message: "El nombre debe ser una cadena" });
-      }
-      if (name.length > 100) {
-        return res.status(400).json({
-          Message: "El nombre no debe ser mayor a 100 caracteres.",
-        });
-      }
-    }
-    if (password) {
-      if (typeof password !== "string") {
-        return res
-          .status(400)
-          .json({ Message: "La contraseña debe ser una cadena" });
-      }
-      if (password.length > 100) {
-        return res.status(400).json({
-          Message: "La constraseña no debe ser mayor a 100 caracteres.",
-        });
-      }
-    }
-    if (email) {
-      const userUnico = await UserModel.findOne({
-        where: { email: email, id: { [Op.ne]: req.params.id } },
-      });
-      if (userUnico !== null) {
-        return res.status(400).json({
-          Message: "El email ya existe.",
-        });
-      }
-    }
+    // if (email) {
+    //   if (email === undefined || email === "") {
+    //     return res
+    //       .status(400)
+    //       .json({ Message: "El email no puede estar vacío" });
+    //   }
+    // }
+    // if (name) {
+    //   if (name === undefined || name === "") {
+    //     return res
+    //       .status(400)
+    //       .json({ Message: "El nombre no puede estar vacío" });
+    //   }
+    // }
+    // if (password) {
+    //   if (password === undefined || password === "") {
+    //     return res
+    //       .status(400)
+    //       .json({ Message: "La contraseña no puede estar vacía" });
+    //   }
+    // }
+    // if (email) {
+    //   if (typeof email !== "string") {
+    //     return res
+    //       .status(400)
+    //       .json({ Message: "El email debe ser una cadena" });
+    //   }
+    //   if (email.length > 100) {
+    //     return res
+    //       .status(400)
+    //       .json({ Message: "El email no debe ser mayor a 100 caracteres." });
+    //   }
+    // }
+    // if (name) {
+    //   if (typeof name !== "string") {
+    //     return res
+    //       .status(400)
+    //       .json({ Message: "El nombre debe ser una cadena" });
+    //   }
+    //   if (name.length > 100) {
+    //     return res.status(400).json({
+    //       Message: "El nombre no debe ser mayor a 100 caracteres.",
+    //     });
+    //   }
+    // }
+    // if (password) {
+    //   if (typeof password !== "string") {
+    //     return res
+    //       .status(400)
+    //       .json({ Message: "La contraseña debe ser una cadena" });
+    //   }
+    //   if (password.length > 100) {
+    //     return res.status(400).json({
+    //       Message: "La constraseña no debe ser mayor a 100 caracteres.",
+    //     });
+    //   }
+    // }
+    // if (email) {
+    //   const userUnico = await UserModel.findOne({
+    //     where: { email: email, id: { [Op.ne]: req.params.id } },
+    //   });
+    //   if (userUnico !== null) {
+    //     return res.status(400).json({
+    //       Message: "El email ya existe.",
+    //     });
+    //   }
+    // }
 
     const [updated] = await UserModel.update(
       { email, name, password },
