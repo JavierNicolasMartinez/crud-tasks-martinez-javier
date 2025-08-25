@@ -11,7 +11,7 @@ export const validationCreateProfile = [
     .trim()
     .notEmpty()
     .withMessage("La fecha de cumpleaños no puede estar vacía"),
-  body(phone_number)
+  body("phone_number")
     .trim()
     .notEmpty()
     .withMessage("El número de telefono no puede estar vacío"),
@@ -47,7 +47,7 @@ export const validationUpdateProfile = [
     .trim()
     .notEmpty()
     .withMessage("La fecha de cumpleaños no puede estar vacía"),
-  body(phone_number)
+  body("phone_number")
     .optional()
     .trim()
     .notEmpty()

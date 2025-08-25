@@ -13,10 +13,20 @@ import {
 import { aplicarValidaciones } from "../middlewares/validator.js";
 
 const routerUser = express.Router();
-routerUser.post("/users", validationCreateUser, aplicarValidaciones, createUser);
+routerUser.post(
+  "/users",
+  validationCreateUser,
+  aplicarValidaciones,
+  createUser
+);
 routerUser.get("/users", usersAll);
 routerUser.get("/users/:id", userId);
-routerUser.put("/users/:id", validationUpdateUser, aplicarValidaciones, updateUser);
+routerUser.put(
+  "/users/:id",
+  validationUpdateUser,
+  aplicarValidaciones,
+  updateUser
+);
 routerUser.delete("/users/:id", deleteUser);
 
 export default routerUser;

@@ -6,13 +6,27 @@ import {
   tasksId,
   deleteTask,
 } from "../controllers/task.controllers.js";
-import { body, validationResult } from "express-validator";
-
+import {
+  validationCreateTask,
+  validationUpdateTask,
+} from "../middlewares/validations/taskValidation.js";
+import { aplicarValidaciones } from "../middlewares/validator.js";
+// import { body, validationResult } from "express-validator";
 const routerTask = express.Router();
-routerTask.post("/tasks", createTask);
+routerTask.post(
+  "/tasks",
+  validationCreateTask,
+  aplicarValidaciones,
+  createTask
+);
 routerTask.get("/tasks", tasksAll);
 routerTask.get("/tasks/:id", tasksId);
-routerTask.put("/tasks/:id", updateTask);
+routerTask.put(
+  "/tasks/:id",
+  validationUpdateTask,
+  aplicarValidaciones,
+  updateTask
+);
 routerTask.delete("/tasks/:id", deleteTask);
 
 export default routerTask;
