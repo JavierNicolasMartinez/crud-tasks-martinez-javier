@@ -16,6 +16,6 @@ export const TagModel = sequelize.define(
     },
   },
   {
-    timestamps: false,
+    paranoid: true,
   }
 );

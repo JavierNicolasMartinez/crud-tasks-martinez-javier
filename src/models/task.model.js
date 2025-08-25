@@ -24,5 +24,21 @@ export const TaskModel = sequelize.define(
   }
 );
 
-TaskModel.belongsTo(UserModel, { foreignKey: "user_id", as: "user" });
-UserModel.hasMany(TaskModel, { foreignKey: "user_id", as: "tasks" });
+TaskModel.belongsTo(UserModel, {
+  foreignKey: "user_id",
+  as: "user",
+  // onDelete: "CASCADE",
+});
+UserModel.hasMany(TaskModel, {
+  foreignKey: "user_id",
+  as: "tasks",
+  // onDelete: "CASCADE",
+});
+
+// UserModel.addHook("afterDestroy", async (user) => {
+//   console.log(user.dataValues.id);
+//   const tarea = await TaskModel.findOne({
+//     where: { user_id: user.dataValues.id },
+//   });
+//   await tarea.destroy();
+// });

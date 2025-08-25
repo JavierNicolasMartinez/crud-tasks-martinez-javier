@@ -6,6 +6,7 @@ import {
   updateUser,
   deleteUser,
 } from "../controllers/user.controllers.js";
+import { body } from "express-validator";
 
 const routerUser = express.Router();
 routerUser.post("/users", createUser);

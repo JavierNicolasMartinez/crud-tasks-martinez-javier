@@ -19,10 +19,26 @@ export const UserProfileModel = sequelize.define(
     },
   },
   {
-    timestamps: false,
+    timestamps: false, 
   }
 );
 
 //Relación Uno a uno
-UserProfileModel.belongsTo(UserModel, { foreignKey: "user_id", as: "user" });
-UserModel.hasOne(UserProfileModel, { foreignKey: "user_id", as: "profile" });
+UserProfileModel.belongsTo(UserModel, {
+  foreignKey: "user_id",
+  as: "user",
+  onDelete: "CASCADE",
+});
+UserModel.hasOne(UserProfileModel, {
+  foreignKey: "user_id",
+  as: "profile",
+  onDelete: "CASCADE",
+});
+
+// UserModel.addHook("afterDestroy", async (user) => {
+//   console.log(user.dataValues.id);
+//   const perfil = await UserProfileModel.findOne({
+//     where: { user_id: user.dataValues.id },
+//   });
+//   await perfil.destroy();
+// });

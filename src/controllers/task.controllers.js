@@ -196,12 +196,16 @@ export const tasksId = async (req, res) => {
         {
           model: UserModel,
           attributes: { exclude: ["password"] },
+          as: "user",
         },
-        {
-          model: TaskTagsModel,
-          attributes: ["id"],
-          include: [{ model: TagModel, attributes: ["name"] }],
-        },
+        // {
+        // model: TaskTagsModel,
+        // attributes: ["id"],
+        // include: [
+        { model: TagModel, attributes: ["name"], as: "tags" },
+
+        // ],
+        // },
       ],
     });
     if (tarea) {

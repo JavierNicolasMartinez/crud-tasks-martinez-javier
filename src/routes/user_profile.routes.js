@@ -6,6 +6,7 @@ import {
   updateProfile,
   deleteProfile,
 } from "../controllers/user_profile.controllers.js";
+import { body } from "express-validator";
 
 const routerProfile = express.Router();
 routerProfile.post("/profile", createUserProfile);

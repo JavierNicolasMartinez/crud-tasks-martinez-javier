@@ -21,5 +21,8 @@ export const UserModel = sequelize.define(
   },
   {
     timestamps: false,
+    // paranoid: true,
+    createdAt: false,
+    updatedAt: false,
   }
 );
