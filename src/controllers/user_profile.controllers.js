@@ -105,46 +105,46 @@ export const perfilId = async (req, res) => {
 export const updateProfile = async (req, res) => {
   const { bio, date_of_birth, phone_number, user_id } = req.body;
   try {
-    if (!user_id || !Number.isInteger(user_id))
-      return res
-        .status(400)
-        .json({ message: "Es necesario asignar un usuario al perfil" });
+    // if (!user_id || !Number.isInteger(user_id))
+    //   return res
+    //     .status(400)
+    //     .json({ message: "Es necesario asignar un usuario al perfil" });
 
-    if (bio) {
-      if (bio === undefined || bio === "") {
-        return res
-          .status(400)
-          .json({ Message: "La biografia no puede estar vacía" });
-      }
-    }
-    if (date_of_birth) {
-      if (date_of_birth === undefined || date_of_birth === "") {
-        return res
-          .status(400)
-          .json({ Message: "El cumpleaños no puede estar vacío" });
-      }
-    }
-    if (phone_number) {
-      if (phone_number === undefined || phone_number === "") {
-        return res
-          .status(400)
-          .json({ Message: "El número de telefono no puede estar vacío" });
-      }
-    }
+    // if (bio) {
+    //   if (bio === undefined || bio === "") {
+    //     return res
+    //       .status(400)
+    //       .json({ Message: "La biografia no puede estar vacía" });
+    //   }
+    // }
+    // if (date_of_birth) {
+    //   if (date_of_birth === undefined || date_of_birth === "") {
+    //     return res
+    //       .status(400)
+    //       .json({ Message: "El cumpleaños no puede estar vacío" });
+    //   }
+    // }
+    // if (phone_number) {
+    //   if (phone_number === undefined || phone_number === "") {
+    //     return res
+    //       .status(400)
+    //       .json({ Message: "El número de telefono no puede estar vacío" });
+    //   }
+    // }
 
-    const perfilExistente = await UserProfileModel.findByPk(user_id);
-    if (perfilExistente === null) {
-      return res.status(400).json({
-        message: "El perfil no existe",
-      });
-    }
-    const telefonoUnico = await UserProfileModel.findOne({
-      where: { phone_number: phone_number, id: { [Op.ne]: req.params.id } },
-    });
-    if (telefonoUnico)
-      return res
-        .status(400)
-        .json({ message: "Ya existe ese número de teléfono" });
+    // const perfilExistente = await UserProfileModel.findByPk(user_id);
+    // if (perfilExistente === null) {
+    //   return res.status(400).json({
+    //     message: "El perfil no existe",
+    //   });
+    // }
+    // const telefonoUnico = await UserProfileModel.findOne({
+    //   where: { phone_number: phone_number, id: { [Op.ne]: req.params.id } },
+    // });
+    // if (telefonoUnico)
+    //   return res
+    //     .status(400)
+    //     .json({ message: "Ya existe ese número de teléfono" });
 
     const [updated] = await UserProfileModel.update(
       { bio, date_of_birth, phone_number, user_id },

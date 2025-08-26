@@ -3,14 +3,14 @@ import { UserModel } from "../../models/user.model.js";
 
 export const validationCreateUser = [
   body("emaill")
-    .trim()
-    .notEmpty()
+    .trim() //quita espacios
+    .notEmpty() //campo obligatorio
     .withMessage("El email no puede estar vacío")
-    .isEmail()
+    .isEmail() //verifica que sea un email
     .withMessage("Debe ser un email valido")
-    .isLength({ max: 100 })
+    .isLength({ max: 100 }) //Da un maximo o un minimo de caracteres
     .withMessage("El email no debe ser mayor a 100 caracteres")
-    .isString()
+    .isString() //Verifica que sea un string
     .withMessage("El email debe ser un string")
     .custom(async (value) => {
       const userUnico = await UserModel.findOne({ where: { email: value } });

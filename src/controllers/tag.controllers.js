@@ -4,23 +4,18 @@ import { TagModel } from "../models/tag.model.js";
 export const createTag = async (req, res) => {
   const { name, description } = req.body;
   try {
-    if (name === undefined || name === "") {
-      return res
-        .status(400)
-        .json({ Message: "El nombre de la etiqueta no puede estar vacío" });
-    }
-    if (description === undefined || description === "") {
-      return res
-        .status(400)
-        .json({ Message: "La descripción no puede estar vacío" });
-    }
-
-    const tagUnica = await TagModel.findOne({ where: { name } });
-    if (tagUnica !== null) {
-      return res.status(400).json({
-        Message: "La etiqueta ya existe",
-      });
-    }
+    // if (name === undefined || name === "") {
+    //   return res
+    //     .status(400)
+    //     .json({ Message: "El nombre de la etiqueta no puede estar vacío" });
+    // }
+      // }
+    // const tagUnica = await TagModel.findOne({ where: { name } });
+    // if (tagUnica !== null) {
+    //   return res.status(400).json({
+    //     Message: "La etiqueta ya existe",
+    //   });
+    // }
     const tag = await TagModel.create({
       name,
       description,
@@ -62,29 +57,29 @@ export const tagsId = async (req, res) => {
 export const updateTag = async (req, res) => {
   const { name, description } = req.body;
   try {
-    if (name) {
-      if (name === undefined || name === "") {
-        return res
-          .status(400)
-          .json({ Message: "El nombre de la etiqueta no puede estar vacío" });
-      }
-    }
-    if (description) {
-      if (description === undefined || description === "") {
-        return res
-          .status(400)
-          .json({ Message: "La descripción no puede estar vacío" });
-      }
-    }
+    // if (name) {
+    //   if (name === undefined || name === "") {
+    //     return res
+    //       .status(400)
+    //       .json({ Message: "El nombre de la etiqueta no puede estar vacío" });
+    //   }
+    // }
+    // if (description) {
+    //   if (description === undefined || description === "") {
+    //     return res
+    //       .status(400)
+    //       .json({ Message: "La descripción no puede estar vacío" });
+    //   }
+    // }
 
-    const tagUnica = await TagModel.findOne({
-      where: { name: name, id: { [Op.ne]: req.params.id } },
-    });
-    if (tagUnica !== null) {
-      return res.status(400).json({
-        Message: "La etiqueta ya existe",
-      });
-    }
+    // const tagUnica = await TagModel.findOne({
+    //   where: { name: name, id: { [Op.ne]: req.params.id } },
+    // });
+    // if (tagUnica !== null) {
+    //   return res.status(400).json({
+    //     Message: "La etiqueta ya existe",
+    //   });
+    // }
 
     const [updated] = await TagModel.update(
       { name, description },

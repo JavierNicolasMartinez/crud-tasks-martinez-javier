@@ -23,7 +23,7 @@ export const TaskModel = sequelize.define(
     timestamps: false,
   }
 );
-
+ //UNO A MUCHOS
 TaskModel.belongsTo(UserModel, {
   foreignKey: "user_id",
   as: "user",
