@@ -6,6 +6,7 @@ const errores = validationResult(req);
 if (!errores.isEmpty())
     res.status(400).json({error: errores.array()})
 
+console.log(errores);
 next();
 }
 

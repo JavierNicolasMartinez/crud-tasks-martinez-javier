@@ -2,7 +2,7 @@ import { body } from "express-validator";
 import { UserModel } from "../../models/user.model.js";
 
 export const validationCreateUser = [
-  body("emaill")
+  body("email")
     .trim() //quita espacios
     .notEmpty() //campo obligatorio
     .withMessage("El email no puede estar vacío")
