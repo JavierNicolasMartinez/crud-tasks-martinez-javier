@@ -8,9 +8,15 @@ export const validationCreateTag = [
     .notEmpty()
     .withMessage("El nombre no puede estar vacío")
     .custom(async (value) => {
-      const tagUnica = await TagModel.findOne({ where: { name: value } });
-      if (tagUnica !== null) {
-        throw new Error("Nombre ya existente");
+      try {
+        const tagUnica = await TagModel.findOne({ where: { name: value } });
+        if (tagUnica) {
+          return Promise.reject("Nombre ya existente");
+        }
+
+        // mas validaciones
+      } catch (error) {
+        console.log("error ");
       }
     }),
 

@@ -14,8 +14,8 @@ export const validationCreateTask = [
     .withMessage("El título no debe superar los 100 catacteres")
     .custom(async (value) => {
       const taskUnica = await TaskModel.findOne({ where: { title: value } });
-      if (taskUnica !== null) {
-        throw new Error("El título ya existe.");
+      if (taskUnica) {
+        return Promise.reject("El título ya existe.");
       }
     }),
 

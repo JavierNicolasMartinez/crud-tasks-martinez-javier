@@ -21,9 +21,7 @@ export const validationCreateProfile = [
         where: { phone_number: value },
       });
       if (telefonoUnico)
-        return res
-          .status(400)
-          .json({ message: "Ya existe ese número de teléfono" });
+        return Promise.reject("Ya existe ese número de teléfono");
     }),
   body("user_id")
     .trim()
