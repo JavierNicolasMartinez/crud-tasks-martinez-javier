@@ -3,7 +3,6 @@ import { UserProfileModel } from "../../models/user_profile.model.js";
 import { UserModel } from "../../models/user.model.js";
 import { Op } from "sequelize";
 
-
 export const validationCreateProfile = [
   body("bio")
     .trim()
@@ -19,7 +18,7 @@ export const validationCreateProfile = [
     .withMessage("El número de telefono no puede estar vacío")
     .custom(async (value) => {
       const telefonoUnico = await UserProfileModel.findOne({
-        where: { phone_number: phone_number, id: { [Op.ne]: req.params.id } },
+        where: { phone_number: value },
       });
       if (telefonoUnico)
         return res
@@ -31,20 +30,44 @@ export const validationCreateProfile = [
     .isInt()
     .withMessage("El id de user debe ser un entero")
     .custom(async (value) => {
-      const perfilUnico = await UserProfileModel.findOne({
-        where: { user_id: value },
-      });
-      if (perfilUnico) {
-        throw new Error("Ya existe un perfil asociado al usuario");
+      try {
+        const perfilUnico = await UserProfileModel.findOne({
+          where: { user_id: value },
+        });
+        if (perfilUnico) {
+          return Promise.reject("Ya existe un perfil asociado al usuario");
+        }
+      } catch (error) {
+        console.error("Error con el perfil.", error);
+        return Promise.reject("Error al encontrar al perfil", error);
       }
-
-      // validar usuario existente
-
-      const usuarioExistente = await UserModel.findByPk(user_id);
-      if (usuarioExistente === null) {
-        throw new Error("El usuario no existe");
+      //   // validar usuario existente
+      //   try {
+      //     const usuarioExistente = await UserModel.findByPk(id);
+      //     if (usuarioExistente === null) {
+      //       return Promise.reject("El usuario no existe");
+      //     }
+      //   } catch (error) {
+      //     console.error("Error con el perfil.", error);
+      //     return Promise.reject("El usuario no existe", error);
+      //   }
+    })
+    .custom(async (id) => {
+      try {
+        const usuarioExistente = await UserModel.findByPk(id);
+        if (!usuarioExistente) {
+          return Promise.reject("El usuario no existe");
+        }
+        return true;
+      } catch (error) {
+        console.error("Ocurrio un error con la existencia del Usuario", error);
+        return Promise.reject(
+          "Ocurrio un error con la existencia del usuario",
+          error
+        );
       }
     }),
+  ,
 ];
 
 export const validationUpdateProfile = [
@@ -88,7 +111,7 @@ export const validationUpdateProfile = [
     .withMessage("El id de user debe ser un entero")
     .custom(async (value) => {
       const perfilUnico = await UserProfileModel.findOne({
-        email: value,
+        where: { user_id: value },
         id: { [Op.ne]: req.params.id },
       });
       if (perfilUnico) {

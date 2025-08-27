@@ -39,12 +39,27 @@ export const validationCreateTask = [
     .withMessage("Debe tener un usuario asignado a través del id")
     .isInt()
     .withMessage("El id debe ser un entero")
-    .custom(async (value) => {
-      const usuario = await UserModel.findByPk(user_id);
-      if (!usuario) {
-        throw new Error("El usuario no existe");
+    .custom(async (id) => {
+      try {
+        const usuarioExistente = await UserModel.findByPk(id);
+        if (!usuarioExistente) {
+          return Promise.reject("El usuario no existe");
+        }
+        return true;
+      } catch (error) {
+        console.error("Ocurrio un error con la existencia del Usuario", error);
+        return Promise.reject(
+          "Ocurrio un error con la existencia del usuario",
+          error
+        );
       }
     }),
+  // .custom(async (value) => {
+  //   const usuario = await UserModel.findByPk(user_id);
+  //   if (!usuario) {
+  //     throw new Error("El usuario no existe");
+  //   }
+  // }),
 ];
 
 export const validationUpdateTask = [
@@ -139,21 +154,21 @@ export const validationGetIdTask = [
 
 export const validationDeleteTask = [
   param("id")
-      .isInt()
-      .withMessage("El id del parametro debe ser un entero")
-      .custom(async (id) => {
-        try {
-          const TareaExistente = await TaskModel.findByPk(id);
-          if (!TareaExistente) {
-            return Promise.reject("La tarea no existe");
-          }
-          return true;
-        } catch (error) {
-          console.error("Ocurrio un error con la existencia de la tarea", error);
-          return Promise.reject(
-            "Ocurrio un error con la existencia de la tarea",
-            error
-          );
+    .isInt()
+    .withMessage("El id del parametro debe ser un entero")
+    .custom(async (id) => {
+      try {
+        const TareaExistente = await TaskModel.findByPk(id);
+        if (!TareaExistente) {
+          return Promise.reject("La tarea no existe");
         }
-      }),
-]
+        return true;
+      } catch (error) {
+        console.error("Ocurrio un error con la existencia de la tarea", error);
+        return Promise.reject(
+          "Ocurrio un error con la existencia de la tarea",
+          error
+        );
+      }
+    }),
+];
