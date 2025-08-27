@@ -9,6 +9,8 @@ import {
 import { body, validationResult } from "express-validator";
 import {
   validationCreateTaskTag,
+  validationDeleteTaskTag,
+  validationGetIdTaskTag,
   validationUpdateTaskTag,
 } from "../middlewares/validations/taskTagValidation.js";
 import { aplicarValidaciones } from "../middlewares/validator.js";
@@ -20,7 +22,12 @@ routerTaskTag.post(
   aplicarValidaciones,
   createTaskTag
 );
-routerTaskTag.get("/task_tags/:id", taskTagId);
+routerTaskTag.get(
+  "/task_tags/:id",
+  validationGetIdTaskTag,
+  aplicarValidaciones,
+  taskTagId
+);
 routerTaskTag.get("/task_tags", taskTagsAll);
 routerTaskTag.put(
   "/task_tags/:id",
@@ -28,5 +35,10 @@ routerTaskTag.put(
   aplicarValidaciones,
   updateTaskTag
 );
-routerTaskTag.delete("/task_tags/:id", deleteTaskTag);
+routerTaskTag.delete(
+  "/task_tags/:id",
+  validationDeleteTaskTag,
+  aplicarValidaciones,
+  deleteTaskTag
+);
 export default routerTaskTag;

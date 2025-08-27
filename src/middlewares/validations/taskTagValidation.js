@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 import { TaskModel } from "../../models/task.model.js";
 import { TaskTagsModel } from "../../models/task_tags.model.js";
 import { TagModel } from "../../models/tag.model.js";
@@ -32,6 +32,27 @@ export const validationCreateTaskTag = [
 ];
 
 export const validationUpdateTaskTag = [
+  param("id")
+    .isInt()
+    .withMessage("El id del parametro debe ser un entero")
+    .custom(async (id) => {
+      try {
+        const taskTagExistente = await TaskTagsModel.findByPk(id);
+        if (!taskTagExistente) {
+          return Promise.reject("La relación entre tarea y etiqueta no existe");
+        }
+        return true;
+      } catch (error) {
+        console.error(
+          "Ocurrio un error con la existencia de la relación de tarea y etiqueta",
+          error
+        );
+        return Promise.reject(
+          "Ocurrio un error con la existencia de la relación de tarea y etiqueta",
+          error
+        );
+      }
+    }),
   body("task_id")
     .optional()
     .trim()
@@ -57,6 +78,54 @@ export const validationUpdateTaskTag = [
       const tagExiste = await TagModel.findByPk({ tag_id: value });
       if (tagExiste === null) {
         throw new Error("La etiqueta no existe");
+      }
+    }),
+];
+
+export const validationGetIdTaskTag = [
+  param("id")
+    .isInt()
+    .withMessage("El id del parametro debe ser un entero")
+    .custom(async (id) => {
+      try {
+        const taskTagExistente = await TaskTagsModel.findByPk(id);
+        if (!taskTagExistente) {
+          return Promise.reject("La relación entre tarea y etiqueta no existe");
+        }
+        return true;
+      } catch (error) {
+        console.error(
+          "Ocurrio un error con la existencia de la relación de tarea y etiqueta",
+          error
+        );
+        return Promise.reject(
+          "Ocurrio un error con la existencia de la relación de tarea y etiqueta",
+          error
+        );
+      }
+    }),
+];
+
+export const validationDeleteTaskTag = [
+  param("id")
+    .isInt()
+    .withMessage("El id del parametro debe ser un entero")
+    .custom(async (id) => {
+      try {
+        const taskTagExistente = await TaskTagsModel.findByPk(id);
+        if (!taskTagExistente) {
+          return Promise.reject("La relación entre tarea y etiqueta no existe");
+        }
+        return true;
+      } catch (error) {
+        console.error(
+          "Ocurrio un error con la existencia de la relación de tarea y etiqueta",
+          error
+        );
+        return Promise.reject(
+          "Ocurrio un error con la existencia de la relación de tarea y etiqueta",
+          error
+        );
       }
     }),
 ];

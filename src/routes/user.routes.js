@@ -1,6 +1,8 @@
 import express from "express";
 import {
   validationCreateUser,
+  validationDeleteUser,
+  validationGetIdUser,
   validationUpdateUser,
 } from "../middlewares/validations/userValidation.js";
 import {
@@ -20,14 +22,19 @@ routerUser.post(
   createUser
 );
 routerUser.get("/users", usersAll);
-routerUser.get("/users/:id", userId);
+routerUser.get("/users/:id", validationGetIdUser, aplicarValidaciones, userId);
 routerUser.put(
   "/users/:id",
   validationUpdateUser,
   aplicarValidaciones,
   updateUser
 );
-routerUser.delete("/users/:id", deleteUser);
+routerUser.delete(
+  "/users/:id",
+  validationDeleteUser,
+  aplicarValidaciones,
+  deleteUser
+);
 
 export default routerUser;
 

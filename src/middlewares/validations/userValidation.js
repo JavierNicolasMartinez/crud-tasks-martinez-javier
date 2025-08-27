@@ -1,5 +1,6 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 import { UserModel } from "../../models/user.model.js";
+import { Op } from "sequelize";
 
 export const validationCreateUser = [
   body("email")
@@ -40,6 +41,24 @@ export const validationCreateUser = [
 ];
 
 export const validationUpdateUser = [
+  param("id")
+    .isInt()
+    .withMessage("El id del parametro debe ser un entero")
+    .custom(async (id) => {
+      try {
+        const usuarioExistente = await UserModel.findByPk(id);
+        if (!usuarioExistente) {
+          return Promise.reject("El usuario no existe");
+        }
+        return true;
+      } catch (error) {
+        console.error("Ocurrio un error con la existencia del Usuario", error);
+        return Promise.reject(
+          "Ocurrio un error con la existencia del usuario",
+          error
+        );
+      }
+    }),
   body("emaill")
     .optional()
     .trim()
@@ -52,7 +71,10 @@ export const validationUpdateUser = [
     .isString()
     .withMessage("El email debe ser un string")
     .custom(async (value) => {
-      const userUnico = await UserModel.findOne({ where: { email: value } });
+      const userUnico = await UserModel.findOne({
+        email: value,
+        id: { [Op.ne]: req.params.id },
+      });
       if (userUnico) {
         throw new Error("El email ya existe");
         //   return res.status(400).json({
@@ -77,3 +99,56 @@ export const validationUpdateUser = [
     .isString()
     .withMessage("La contraseña debe ser un string"),
 ];
+
+export const validationGetIdUser = [
+  param("id")
+    .isInt()
+    .withMessage("El id del parametro debe ser un entero")
+    .custom(async (id) => {
+      try {
+        const usuarioExistente = await UserModel.findByPk(id);
+        if (!usuarioExistente) {
+          return Promise.reject("El usuario no existe");
+        }
+        return true;
+      } catch (error) {
+        console.error("Ocurrio un error con la existencia del Usuario", error);
+        return Promise.reject(
+          "Ocurrio un error con la existencia del usuario",
+          error
+        );
+      }
+    }),
+];
+
+//Forma del profe
+// param("id")
+//   .isInt()
+//   .withMessage("...")
+//   .custom(async (value) => {
+//     const person = await PersonModel.findByPk(value);
+//     if (!person) {
+//       throw new Error("...");
+//     }
+//   });
+
+export const validationDeleteUser = [
+  param("id")
+    .isInt()
+    .withMessage("El id del parametro debe ser un entero")
+    .custom(async (id) => {
+      try {
+        const usuarioExistente = await UserModel.findByPk(id);
+        if (!usuarioExistente) {
+          return Promise.reject("El usuario no existe");
+        }
+        return true;
+      } catch (error) {
+        console.error("Ocurrio un error con la existencia del Usuario", error);
+        return Promise.reject(
+          "Ocurrio un error con la existencia del usuario",
+          error
+        );
+      }
+    }),
+]

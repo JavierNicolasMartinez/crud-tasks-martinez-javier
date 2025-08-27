@@ -24,26 +24,26 @@ TaskModel.belongsToMany(TagModel, {
   through: TaskTagsModel,
   foreignKey: "task_id",
   as: "tags",
-  // onDelete: "CASCADE",
+  onDelete: "CASCADE",
 });
 
 TagModel.belongsToMany(TaskModel, {
   through: TaskTagsModel,
   foreignKey: "tag_id",
   as: "tasks",
-  // onDelete: "CASCADE",
+  onDelete: "CASCADE",
 });
 
 TaskTagsModel.belongsTo(TagModel, {
   foreignKey: "tag_id",
   as: "tags",
-  // onDelete: "CASCADE",
+  onDelete: "CASCADE",
 });
 
 TaskTagsModel.belongsTo(TaskModel, {
   foreignKey: "task_id",
   as: "tasks",
-  // onDelete: "CASCADE",
+  onDelete: "CASCADE",
 });
 
 // TaskModel.hasMany(TaskTagsModel, {

@@ -8,6 +8,8 @@ import {
 } from "../controllers/task.controllers.js";
 import {
   validationCreateTask,
+  validationDeleteTask,
+  validationGetIdTask,
   validationUpdateTask,
 } from "../middlewares/validations/taskValidation.js";
 import { aplicarValidaciones } from "../middlewares/validator.js";
@@ -20,14 +22,19 @@ routerTask.post(
   createTask
 );
 routerTask.get("/tasks", tasksAll);
-routerTask.get("/tasks/:id", tasksId);
+routerTask.get("/tasks/:id", validationGetIdTask, aplicarValidaciones, tasksId);
 routerTask.put(
   "/tasks/:id",
   validationUpdateTask,
   aplicarValidaciones,
   updateTask
 );
-routerTask.delete("/tasks/:id", deleteTask);
+routerTask.delete(
+  "/tasks/:id",
+  validationDeleteTask,
+  aplicarValidaciones,
+  deleteTask
+);
 
 export default routerTask;
 

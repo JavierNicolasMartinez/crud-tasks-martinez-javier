@@ -1,6 +1,7 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 import { TaskModel } from "../../models/task.model.js";
 import { UserModel } from "../../models/user.model.js";
+import { Op } from "sequelize";
 
 export const validationCreateTask = [
   body("title")
@@ -47,6 +48,24 @@ export const validationCreateTask = [
 ];
 
 export const validationUpdateTask = [
+  param("id")
+    .isInt()
+    .withMessage("El id del parametro debe ser un entero")
+    .custom(async (id) => {
+      try {
+        const TareaExistente = await TaskModel.findByPk(id);
+        if (!TareaExistente) {
+          return Promise.reject("La tarea no existe");
+        }
+        return true;
+      } catch (error) {
+        console.error("Ocurrio un error con la existencia de la tarea", error);
+        return Promise.reject(
+          "Ocurrio un error con la existencia de la tarea",
+          error
+        );
+      }
+    }),
   body("title")
     .optional()
     .trim()
@@ -57,7 +76,10 @@ export const validationUpdateTask = [
     .isLength({ max: 100 })
     .withMessage("El título no debe superar los 100 catacteres")
     .custom(async (value) => {
-      const taskUnica = await TaskModel.findOne({ where: { title: value } });
+      const taskUnica = await TaskModel.findOne({
+        title: value,
+        id: { [Op.ne]: req.params.id },
+      });
       if (taskUnica !== null) {
         throw new Error("El título ya existe.");
       }
@@ -93,3 +115,45 @@ export const validationUpdateTask = [
       }
     }),
 ];
+
+export const validationGetIdTask = [
+  param("id")
+    .isInt()
+    .withMessage("El id del parametro debe ser un entero")
+    .custom(async (id) => {
+      try {
+        const TareaExistente = await TaskModel.findByPk(id);
+        if (!TareaExistente) {
+          return Promise.reject("La tarea no existe");
+        }
+        return true;
+      } catch (error) {
+        console.error("Ocurrio un error con la existencia de la tarea", error);
+        return Promise.reject(
+          "Ocurrio un error con la existencia de la tarea",
+          error
+        );
+      }
+    }),
+];
+
+export const validationDeleteTask = [
+  param("id")
+      .isInt()
+      .withMessage("El id del parametro debe ser un entero")
+      .custom(async (id) => {
+        try {
+          const TareaExistente = await TaskModel.findByPk(id);
+          if (!TareaExistente) {
+            return Promise.reject("La tarea no existe");
+          }
+          return true;
+        } catch (error) {
+          console.error("Ocurrio un error con la existencia de la tarea", error);
+          return Promise.reject(
+            "Ocurrio un error con la existencia de la tarea",
+            error
+          );
+        }
+      }),
+]
